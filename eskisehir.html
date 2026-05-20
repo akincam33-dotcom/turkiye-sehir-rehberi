@@ -1,0 +1,450 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eskişehir</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.5;
+            color: #222;
+            background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)), url("fotograflar/türkbeyaz.png") center / cover no-repeat fixed;
+            min-height: 100vh;
+        }
+
+        .detay {
+            max-width: 800px;
+            margin: 24px auto;
+            padding: 24px;
+            background: #a0a0a04c;
+            border: 1px solid #cccccc00;
+        }
+
+        .detay h1 {
+            text-align: center;
+            margin: 0 0 16px;
+        }
+
+        .detay h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .detay img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        a {
+            color: #0645ad;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #fefefee8;
+                background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("fotograflar/türksiyah.png") center / cover no-repeat fixed;
+            }
+
+            .detay {
+                background: rgba(42, 42, 42, 0.7);
+                border: 1px solid #444;
+            }
+
+            .detay h1,
+            .detay h2 {
+                color: #eee;
+            }
+
+            a {
+                color: #66b2ff;
+            }
+        }
+
+        /* Slider (Carousel) CSS */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 20px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .carousel-track-container {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .carousel-slide:hover img {
+            transform: scale(1.05);
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: #fff;
+            padding: 20px 15px;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.7);
+            color: #333;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-btn.prev {
+            left: 15px;
+        }
+
+        .carousel-btn.next {
+            right: 15px;
+        }
+
+        /* Modal CSS */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #000;
+        }
+
+        .modal-body h3 {
+            margin-top: 0;
+            color: #222;
+            border-bottom: 2px solid #0645ad;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .modal-body p {
+            color: #444;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Karanlık mod (Dark Mode) uyumu için */
+        @media (prefers-color-scheme: dark) {
+            .modal-content {
+                background: #2a2a2a;
+            }
+
+            .modal-body h3 {
+                color: #eee;
+                border-bottom-color: #66b2ff;
+            }
+
+            .modal-body p {
+                color: #ddd;
+            }
+
+            .modal-close {
+                color: #aaa;
+            }
+
+            .modal-close:hover {
+                color: #fff;
+            }
+
+            .carousel-btn {
+                background: rgba(0, 0, 0, 0.6);
+                color: #fff;
+            }
+
+            .carousel-btn:hover {
+                background: rgba(0, 0, 0, 0.9);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="detay">
+
+        <h1>Eskişehir </h1>
+        <hr>
+
+        <h2>🍽️ Yenecekler</h2>
+        <div id="slider-yemekler" class="carousel-container" data-slide-index="0">
+            <button class="carousel-btn prev" onclick="moveSlide(-1, 'slider-yemekler')">&#10094;</button>
+            <div class="carousel-track-container">
+                <div class="carousel-track">
+                    <div class="carousel-slide" onclick="openModal('modal-yemek-1')">
+                        <img src="yemekler/eskiciğ.jpg" alt="Çibörek">
+                        <div class="slide-caption">Çibörek</div>
+                    </div>
+                    <div class="carousel-slide" onclick="openModal('modal-yemek-2')">
+                        <img src="yemekler/eskibalaban.png" alt="Balaban köfte">
+                        <div class="slide-caption">Balaban köfte</div>
+                    </div>
+                    <div class="carousel-slide" onclick="openModal('modal-yemek-3')">
+                        <img src="yemekler/eskiyem3.jpg" alt="Haşhaşlı çörek">
+                        <div class="slide-caption">Haşhaşlı çörek</div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn next" onclick="moveSlide(1, 'slider-yemekler')">&#10095;</button>
+        </div>
+        <br>
+        <h2>📍 Gezilecek Yerler</h2>
+        <div id="slider-gezilecek" class="carousel-container" data-slide-index="0">
+            <button class="carousel-btn prev" onclick="moveSlide(-1, 'slider-gezilecek')">&#10094;</button>
+            <div class="carousel-track-container">
+                <div class="carousel-track">
+                    <div class="carousel-slide" onclick="openModal('modal-1')">
+                        <img src="gezilecekyerler/eskigez1.jpg" alt="Sazova Bilim Parkı">
+                        <div class="slide-caption">Sazova Bilim Parkı</div>
+                    </div>
+                    <div class="carousel-slide" onclick="openModal('modal-2')">
+                        <img src="gezilecekyerler/eskiporsu.jpg" alt="Porsuk Çayı">
+                        <div class="slide-caption">Porsuk Çayı</div>
+                    </div>
+                    <div class="carousel-slide" onclick="openModal('modal-3')">
+                        <img src="gezilecekyerler/eskifrig.jpg" alt="Frig Vadisi">
+                        <div class="slide-caption">Frig Vadisi</div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn next" onclick="moveSlide(1, 'slider-gezilecek')">&#10095;</button>
+        </div>
+        <br>
+        <h2>🌿 Doğası</h2>
+        <p>
+            Eskişehir, şehir içinden geçen Porsuk Çayı sayesinde modern ve canlı bir görünüme sahiptir. Geniş parkları
+            ve yürüyüş alanlarıyla dikkat çeker. Frig Vadisi doğal kaya oluşumlarıyla öne çıkan önemli alanlardan
+            biridir. Düzenli şehir yapısı sayesinde Türkiye’nin en yaşanabilir şehirlerinden biri olarak görülür.
+        </p>
+        <br>
+        <h2>​📜​Tarihi</h2>
+        <p>Eskişehir, tarihi İpek Yolu üzerinde yer aldığı için geçmişte önemli bir ticaret merkezi olmuştur. Osmanlı
+            döneminde gelişimini sürdürmüş ve kültürel açıdan önemli şehirlerden biri hâline gelmiştir. Günümüzde
+            üniversiteleri ve sosyal yaşamıyla modern bir şehir görünümündedir. Tarihi Odunpazarı bölgesi Osmanlı
+            mimarisini günümüze taşımaktadır.</p>
+        <br>
+        <h2>🧭​Bölgesi</h2>
+        <p>Bölge: İç Anadolu Bölgesi</p>
+        <a href="https://www.google.com/maps?q=Eskişehir">Maps görüntüsü
+            <br>
+            <hr>
+        </a>
+
+        <a href="index.html">← Ana Sayfaya Dön</a>
+
+    </div>
+
+    <div id="modal-1" class="modal-overlay" onclick="closeModal(event, 'modal-1')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(null, 'modal-1')">&times;</span>
+            <div class="modal-body">
+                <h3>Sazova Bilim Parkı</h3>
+                <p>Sazova Bilim Parkı (tam adıyla Sazova Bilim, Kültür ve Sanat Parkı), Türkiye’nin Eskişehir kentinde
+                    yer alan geniş bir tematik parktır. Bilim, kültür ve eğlenceyi bir arada sunan bu alan, Eskişehir’in
+                    simgelerinden biri haline gelmiş ve hem yerel halk hem de turistler için popüler bir çekim noktası
+                    olmuştur.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-2" class="modal-overlay" onclick="closeModal(event, 'modal-2')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(null, 'modal-2')">&times;</span>
+            <div class="modal-body">
+                <h3>Porsuk Çayı</h3>
+                <p>Porsuk Çayı, Türkiye'nin İç Anadolu Bölgesi'nde bulunan ve özellikle Eskişehir kent merkezinden
+                    geçmesiyle tanınan bir akarsudur. Sakarya Nehri'nin önemli kollarından biridir ve hem ekolojik hem
+                    de kentsel kimlik açısından bölgenin sembollerindendir.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-3" class="modal-overlay" onclick="closeModal(event, 'modal-3')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(null, 'modal-3')">&times;</span>
+            <div class="modal-body">
+                <h3>Frig Vadisi</h3>
+                <p>Frig Vadisi, Türkiye’nin Eskişehir, Kütahya ve Afyonkarahisar illeri arasında yer alan geniş
+                    arkeolojik ve doğal sit alanıdır. MÖ 9.–6. yüzyıllar arasında bölgede yaşayan Frig uygarlığının kaya
+                    anıtları, açık hava tapınakları ve mezar yapılarıyla tanınır. Zengin kültürel mirası ve volkanik
+                    tüflerle şekillenmiş doğal dokusuyla “İkinci Kapadokya” olarak anılır.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-yemek-1" class="modal-overlay" onclick="closeModal(event, 'modal-yemek-1')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(null, 'modal-yemek-1')">&times;</span>
+            <div class="modal-body">
+                <h3>Çibörek</h3>
+                <p>Çibörek (veya çiğ börek), Kırım Tatar mutfağından köken alan, ince açılmış mayasız hamurun kıymalı
+                    içle doldurulup yağda kızartılmasıyla yapılan geleneksel bir hamur işidir.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-yemek-2" class="modal-overlay" onclick="closeModal(event, 'modal-yemek-2')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(null, 'modal-yemek-2')">&times;</span>
+            <div class="modal-body">
+                <h3>Balaban köfte</h3>
+                <p>Balaban köfte, Türkiye'nin Eskişehir kentinden köken alan geleneksel bir köfte yemeğidir. Genellikle
+                    ızgara köftelerin pidelerin üzerine dizilip yoğurt, domates sosu ve eritilmiş tereyağı ile servis
+                    edilmesiyle hazırlanır. Etin, yoğurdun ve sosun birleşimiyle zengin bir Anadolu lezzetini temsil
+                    eder.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-yemek-3" class="modal-overlay" onclick="closeModal(event, 'modal-yemek-3')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(null, 'modal-yemek-3')">&times;</span>
+            <div class="modal-body">
+                <h3>Haşhaşlı çörek</h3>
+                <p>Haşhaşlı çörek, özellikle Türkiye’nin Orta Anadolu ve Ege bölgelerinde yapılan geleneksel bir hamur
+                    işidir. Adını iç harcında kullanılan haşhaş (afyon tohumu) ezmesinden alır. Kıvamı, aromatik tadı ve
+                    kat kat yapısıyla yerel mutfak kültürünün belirgin bir parçasıdır.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. SLIDER (CAROUSEL) KONTROL KODLARI ---
+        // İleri veya geri oklarına basıldığında çalışan fonksiyon
+        // Artık sayfamızda birden fazla slider (yemekler, gezilecekler vs.) olduğu için hangi slider olduğunu bilmesi gerekiyor
+        function moveSlide(direction, carouselId) {
+            const container = document.getElementById(carouselId);
+            const track = container.querySelector('.carousel-track');
+            const slides = track.querySelectorAll('.carousel-slide');
+            const totalSlides = slides.length;
+
+            // Container üzerinden bu slider'ın mevcut indeksini al (yoksa 0)
+            let currentIndex = parseInt(container.getAttribute('data-slide-index')) || 0;
+
+            // Yeni slayt indeksini hesapla
+            currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
+
+            // Yeni indeksi HTML'e kaydet (diğer basışta hatırlaması için)
+            container.setAttribute('data-slide-index', currentIndex);
+
+            // Slayt şeridini x ekseninde (yatayda) kaydır.
+            const movePercentage = -(currentIndex * 100);
+            track.style.transform = `translateX(${movePercentage}%)`;
+        }
+
+        // --- 2. MODAL (AÇILIR PENCERE) KONTROL KODLARI ---
+        // Modal açma fonksiyonu
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'flex'; // Flex yaparak içeriği ortalarız
+            // Sayfanın arkasının kaydırılmasını (scroll) engellemek için
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Modal kapatma fonksiyonu
+        function closeModal(event, modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'none';
+            // Sayfanın arkasının kaydırılmasını (scroll) geri açarız
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,462 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nevşehir</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.5;
+            color: #222;
+            background: linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)), url("fotograflar/türkbeyaz.png") center / cover no-repeat fixed;
+            min-height: 100vh;
+        }
+
+        .detay {
+            max-width: 800px;
+            margin: 24px auto;
+            padding: 24px;
+            background: #a0a0a04c;
+            border: 1px solid #cccccc00;
+        }
+
+        .detay h1 {
+            text-align: center;
+            margin: 0 0 16px;
+        }
+
+        .detay h2 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .detay img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        a {
+            color: #0645ad;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #fefefee8;
+                background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("fotograflar/türksiyah.png") center / cover no-repeat fixed;
+            }
+
+            .detay {
+                background: rgba(42, 42, 42, 0.7);
+                border: 1px solid #444;
+            }
+
+            .detay h1,
+            .detay h2 {
+                color: #eee;
+            }
+
+            a {
+                color: #66b2ff;
+            }
+        }
+
+        /* Slider (Carousel) CSS */
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin: 20px auto;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .carousel-track-container {
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .carousel-slide:hover img {
+            transform: scale(1.05);
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: #fff;
+            padding: 20px 15px;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: bold;
+            pointer-events: none;
+            /* Metnin tıklamayı engellememesi için */
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.7);
+            color: #333;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-btn.prev {
+            left: 15px;
+        }
+
+        .carousel-btn.next {
+            right: 15px;
+        }
+
+        /* Modal CSS */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #000;
+        }
+
+        .modal-body h3 {
+            margin-top: 0;
+            color: #222;
+            border-bottom: 2px solid #0645ad;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .modal-body p {
+            color: #444;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Karanlık mod (Dark Mode) uyumu için */
+        @media (prefers-color-scheme: dark) {
+            .modal-content {
+                background: #2a2a2a;
+            }
+
+            .modal-body h3 {
+                color: #eee;
+                border-bottom-color: #66b2ff;
+            }
+
+            .modal-body p {
+                color: #ddd;
+            }
+
+            .modal-close {
+                color: #aaa;
+            }
+
+            .modal-close:hover {
+                color: #fff;
+            }
+
+            .carousel-btn {
+                background: rgba(0, 0, 0, 0.6);
+                color: #fff;
+            }
+
+            .carousel-btn:hover {
+                background: rgba(0, 0, 0, 0.9);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="detay">
+
+        <h1>Nevşehir </h1>
+        <hr>
+
+        <h2>🍽️ Yenecekler</h2>
+        <div id="slider-yemekler" class="carousel-container" data-slide-index="0">
+            <button class="carousel-btn prev" onclick="moveSlide(-1, 'slider-yemekler')">&#10094;</button>
+            <div class="carousel-track-container">
+                <div class="carousel-track">
+                    <div class="carousel-slide" onclick="openModal('modal-yemek-1')">
+                        <img src="yemekler/nevtesti.jpg" alt="Testi kebabı">
+                        <div class="slide-caption">Testi kebabı</div>
+                    </div>
+                    <div class="carousel-slide" onclick="openModal('modal-yemek-2')">
+                        <img src="yemekler/nevÇömlekteFasulye.jpg" alt="Çömlek fasulyesi">
+                        <div class="slide-caption">Çömlek fasulyesi</div>
+                    </div>
+                    <div class="carousel-slide" onclick="openModal('modal-yemek-3')">
+                        <img src="yemekler/nevdüğü.jpg" alt="Düğü çorbası">
+                        <div class="slide-caption">Düğü çorbası</div>
+                    </div>
+                    <div class="carousel-slide" onclick="openModal('modal-yemek-4')">
+                        <img src="yemekler/nevtatlı.jpg" alt="Aside tatlısı">
+                        <div class="slide-caption">Aside tatlısı</div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn next" onclick="moveSlide(1, 'slider-yemekler')">&#10095;</button>
+        </div>
+        <br>
+        <h2>📍 Gezilecek Yerler</h2>
+        <div id="slider-gezilecek" class="carousel-container" data-slide-index="0">
+            <button class="carousel-btn prev" onclick="moveSlide(-1, 'slider-gezilecek')">&#10094;</button>
+            <div class="carousel-track-container">
+                <div class="carousel-track">
+                    <div class="carousel-slide" onclick="openModal('modal-1')">
+                        <img src="gezilecekyerler/nevkapadokya.jpg" alt="Kapadokya">
+                        <div class="slide-caption">Kapadokya</div>
+                    </div>
+                    <div class="carousel-slide" onclick="openModal('modal-2')">
+                        <img src="gezilecekyerler/nevgoreme.webp" alt="Göreme Açık Hava Müzesi">
+                        <div class="slide-caption">Göreme Açık Hava Müzesi</div>
+                    </div>
+                    <div class="carousel-slide" onclick="openModal('modal-3')">
+                        <img src="gezilecekyerler/nevderinkuyu.jpg" alt="Derinkuyu Yeraltı Şehri">
+                        <div class="slide-caption">Derinkuyu Yeraltı Şehri</div>
+                    </div>
+                    <div class="carousel-slide" onclick="openModal('modal-4')">
+                        <img src="gezilecekyerler/nevhisar.jpg" alt="Uçhisar Kalesi">
+                        <div class="slide-caption">Uçhisar Kalesi</div>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-btn next" onclick="moveSlide(1, 'slider-gezilecek')">&#10095;</button>
+        </div>
+        <br>
+        <h2>🌿 Doğası</h2>
+        <p>
+            Peribacaları ve benzersiz kaya oluşumlarıyla dünyanın en dikkat çekici doğal bölgelerinden biridir. Vadiler, mağaralar ve kayalık alanlar bölgenin genel görünümünü oluşturur. Sıcak hava balonlarıyla birlikte ortaya çıkan manzara Kapadokya’yı eşsiz kılar. Gün doğumu ve gün batımı manzaraları oldukça ünlüdür.
+        </p>
+        <br>
+        <h2>​📜​Tarihi</h2>
+        <p>Nevşehir ve Kapadokya bölgesi, binlerce yıllık bir yerleşim alanıdır. Erken Hristiyanlık döneminde önemli bir sığınak olmuş ve yeraltı şehirleri kurulmuştur. Bölgedeki kiliseler ve freskler bu dönemin izlerini taşır. Doğal oluşumlarla birleşen bu tarih, bölgeyi dünyada eşsiz kılar.</p>
+        <br>
+        <h2>🧭​Bölgesi</h2>
+        <p>Bölge: İç Anadolu Bölgesi</p>
+        <a href="https://www.google.com/maps?q=Nevşehir">Maps görüntüsü
+            <br>
+            <hr>
+        </a>
+
+        <a href="index.html">← Ana Sayfaya Dön</a>
+
+    </div>
+
+    <!-- Bütün Modallar -->
+    <div id="modal-1" class="modal-overlay" onclick="closeModal(event, 'modal-1')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(null, 'modal-1')">&times;</span>
+            <div class="modal-body">
+                <h3>Kapadokya</h3>
+                <p>Kapadokya, Türkiye’nin Nevşehir ilinde yer alan, volkanik kayaların milyonlarca yılda rüzgâr ve yağmurla şekillendiği, benzersiz doğal ve tarihî oluşumlarıyla tanınan bir bölgedir. “Güzel Atlar Diyarı” anlamına gelen ismiyle bilinen bu coğrafya, peri bacaları, yeraltı şehirleri, açık hava müzeleri ve sıcak hava balonlarıyla dünya çapında ünlüdür.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-2" class="modal-overlay" onclick="closeModal(event, 'modal-2')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(null, 'modal-2')">&times;</span>
+            <div class="modal-body">
+                <h3>Göreme Açık Hava Müzesi</h3>
+                <p>Göreme Açık Hava Müzesi, Türkiye’nin Nevşehir ilinde, Kapadokya bölgesinde yer alan geniş bir kaya oyma manastır kompleksidir. UNESCO Dünya Mirası Listesi’nde bulunan müze, erken Hristiyanlık dönemine ait manastır yaşamını ve kaya kiliselerini olağanüstü biçimde korumuş bir arkeolojik ve dini alandır.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-3" class="modal-overlay" onclick="closeModal(event, 'modal-3')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(null, 'modal-3')">&times;</span>
+            <div class="modal-body">
+                <h3>Derinkuyu Yeraltı Şehri</h3>
+                <p>Derinkuyu Yeraltı Şehri, Türkiye'nin Nevşehir ilinde yer alan ve dünyanın en büyük kazılmış yeraltı şehirlerinden biridir. Kapadokya bölgesinin benzersiz volkanik kaya yapısı içinde oyulmuş bu şehir, tarih boyunca savunma, barınma ve ibadet amacıyla kullanılmıştır.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-4" class="modal-overlay" onclick="closeModal(event, 'modal-4')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(null, 'modal-4')">&times;</span>
+            <div class="modal-body">
+                <h3>Uçhisar Kalesi</h3>
+                <p>Uçhisar Kalesi, Türkiye’nin Nevşehir ilindeki Kapadokya bölgesinde yer alan, volkanik tüf kayalardan oyulmuş doğal bir kale oluşumudur. Bölgenin en yüksek noktasında yer alması sayesinde Göreme, Avanos ve Erciyes Dağı’na kadar uzanan panoramik manzaralar sunar ve Kapadokya’nın simgelerinden biridir.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Yemek Modalları -->
+    <div id="modal-yemek-1" class="modal-overlay" onclick="closeModal(event, 'modal-yemek-1')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(null, 'modal-yemek-1')">&times;</span>
+            <div class="modal-body">
+                <h3>Testi Kebabı</h3>
+                <p>Testi Kebabı, Orta Anadolu’nun özellikle Kapadokya bölgesine özgü geleneksel bir et yemeğidir. Et, sebze ve baharatların toprak testide uzun süre pişirilmesiyle hazırlanır. Avanos’un ünlü çömlekçilik geleneğiyle bütünleşmiş olan bu yemek, servis sırasında testinin kırılmasıyla görsel bir şölen sunar.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-yemek-2" class="modal-overlay" onclick="closeModal(event, 'modal-yemek-2')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(null, 'modal-yemek-2')">&times;</span>
+            <div class="modal-body">
+                <h3>Çömlek fasulyesi</h3>
+                <p>Çömlek fasulyesi, Türk mutfağında kuru fasulyenin toprak çömlek içinde ağır ateşte pişirilmesiyle yapılan geleneksel bir yemektir.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-yemek-3" class="modal-overlay" onclick="closeModal(event, 'modal-yemek-3')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(null, 'modal-yemek-3')">&times;</span>
+            <div class="modal-body">
+                <h3>Düğü çorbası</h3>
+                <p>Düğü çorbası, Anadolu mutfağına özgü, bulgurun (düğü) temel malzeme olduğu geleneksel bir Türk çorbasıdır.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-yemek-4" class="modal-overlay" onclick="closeModal(event, 'modal-yemek-4')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal(null, 'modal-yemek-4')">&times;</span>
+            <div class="modal-body">
+                <h3>Aside Tatlısı</h3>
+                <p>Aside Tatlısı, Türkiye’nin özellikle Hatay ve çevresinde yapılan geleneksel bir tatlısıdır. Un, pekmez ve suyun karıştırılmasıyla yapılan bu tatlı, sade malzemelerine rağmen yoğun bir lezzete sahiptir. Osmanlı mutfağından günümüze uzanan Aside, özellikle kış aylarında enerji verici özelliğiyle bilinir.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. SLIDER (CAROUSEL) KONTROL KODLARI ---
+        // İleri veya geri oklarına basıldığında çalışan fonksiyon
+        // Artık sayfamızda birden fazla slider (yemekler, gezilecekler vs.) olduğu için hangi slider olduğunu bilmesi gerekiyor
+        function moveSlide(direction, carouselId) {
+            const container = document.getElementById(carouselId);
+            const track = container.querySelector('.carousel-track');
+            const slides = track.querySelectorAll('.carousel-slide');
+            const totalSlides = slides.length;
+
+            // Container üzerinden bu slider'ın mevcut indeksini al (yoksa 0)
+            let currentIndex = parseInt(container.getAttribute('data-slide-index')) || 0;
+
+            // Yeni slayt indeksini hesapla
+            currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
+
+            // Yeni indeksi HTML'e kaydet (diğer basışta hatırlaması için)
+            container.setAttribute('data-slide-index', currentIndex);
+
+            // Slayt şeridini x ekseninde (yatayda) kaydır.
+            const movePercentage = -(currentIndex * 100);
+            track.style.transform = `translateX(${movePercentage}%)`;
+        }
+
+        // --- 2. MODAL (AÇILIR PENCERE) KONTROL KODLARI ---
+        // Modal açma fonksiyonu
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'flex'; // Flex yaparak içeriği ortalarız
+            // Sayfanın arkasının kaydırılmasını (scroll) engellemek için
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Modal kapatma fonksiyonu
+        function closeModal(event, modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'none';
+            // Sayfanın arkasının kaydırılmasını (scroll) geri açarız
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+</body>
+
+</html>

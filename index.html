@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Türkiye'nin seçilmiş şehirlerinde gezilecek yerler ve kısa rehber sayfaları.">
+    <title>Türkiye Şehirleri ve Gezilecek Yerler</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            line-height: 1.5;
+            color: #fefefee8;
+            background: url("fotograflar/türksiyah.png") center / cover no-repeat fixed;
+            min-height: 100vh;
+        }
+
+        .wrap {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 24px 16px 40px;
+            background: #00000000;
+        }
+
+        header {
+            border-bottom: 1px solid #ffffff;
+            padding-bottom: 16px;
+        }
+
+        header h1 {
+            margin: 0 0 8px;
+            font-size: 1.5rem;
+        }
+
+        .lead {
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .section-title {
+            margin: 24px 0 12px;
+            font-size: 0.9rem;
+            color: #c4c4c4e9;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
+        .card {
+            display: block;
+            text-decoration: none;
+            color: #ffffff;
+            background: #373737;
+            border: 1px solid #ccc;
+        }
+
+        .card:hover {
+            border-color: #373737;
+        }
+
+        .card:focus-visible {
+            outline: 2px solid #222;
+            outline-offset: 2px;
+        }
+
+        .card img {
+            display: block;
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            background: #1a1a1a;
+        }
+
+        .card h2 {
+            margin: 0;
+            padding: 10px 12px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .site-footer {
+            margin-top: 28px;
+            padding-top: 16px;
+            border-top: 1px solid #ffffff;
+            font-size: 14px;
+            color: #f6f6f6;
+        }
+
+        .site-footer p {
+            margin: 0 0 6px;
+        }
+
+        .site-footer p:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (prefers-color-scheme: light) {
+            body {
+                color: #222;
+                background: url("fotograflar/türkbeyaz.png") center / cover no-repeat fixed;
+            }
+
+            header {
+                border-bottom: 1px solid #222;
+            }
+
+            .lead,
+            .section-title {
+                color: #444;
+            }
+
+            .card {
+                color: #222;
+                background: #f9f9f9;
+                border: 1px solid #ccc;
+            }
+
+            .card:hover {
+                border-color: #999;
+                background: #fff;
+            }
+
+            .site-footer {
+                color: #222;
+                border-top: 1px solid #222;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <h1>Türkiye’nin şehirleri ve gezilecek yerler</h1>
+            <p class="lead">
+                Bu sayfada farklı iller için hazırlanmış kısa rehberlere ulaşabilirsiniz.
+                Bir şehre tıklayarak o bölgedeki öne çıkan yerler hakkında bilgi alın.
+            </p>
+        </header>
+
+        <main class="home-main">
+            <h2 class="section-title">Şehir rehberleri</h2>
+            <div class="grid">
+                <a href="ankara.html" class="card">
+                    <img src="fotograflar/ankaragez1.jpg" alt="Ankara görseli" width="400" height="120" loading="lazy">
+                    <h2>Ankara</h2>
+                </a>
+                <a href="izmir.html" class="card">
+                    <img src="fotograflar/izmir.jpg" alt="İzmir görseli" width="400" height="120" loading="lazy">
+                    <h2>İzmir</h2>
+                </a>
+                <a href="trabzon.html" class="card">
+                    <img src="fotograflar/trabzon.jpg" alt="Trabzon görseli" width="400" height="120" loading="lazy">
+                    <h2>Trabzon</h2>
+                </a>
+                <a href="antalya.html" class="card">
+                    <img src="fotograflar/antalya.jpg" alt="Antalya görseli" width="400" height="120" loading="lazy">
+                    <h2>Antalya</h2>
+                </a>
+                <a href="nevşehir.html" class="card">
+                    <img src="fotograflar/nevşehir.jpg" alt="Nevşehir görseli" width="400" height="120" loading="lazy">
+                    <h2>Nevşehir</h2>
+                </a>
+                <a href="erzurum.html" class="card">
+                    <img src="fotograflar/erzurum.jpg" alt="Erzurum görseli" width="400" height="120" loading="lazy">
+                    <h2>Erzurum</h2>
+                </a>
+                <a href="edirne.html" class="card">
+                    <img src="fotograflar/edirne.jpg" alt="Edirne görseli" width="400" height="120" loading="lazy">
+                    <h2>Edirne</h2>
+                </a>
+                <a href="gaziantep.html" class="card">
+                    <img src="fotograflar/gazi.jpg" alt="Gaziantep görseli" width="400" height="120" loading="lazy">
+                    <h2>Gaziantep</h2>
+                </a>
+                <a href="istanbul.html" class="card">
+                    <img src="fotograflar/istanbul.jpg" alt="İstanbul görseli" width="400" height="120" loading="lazy">
+                    <h2>İstanbul</h2>
+                </a>
+                <a href="hatay.html" class="card">
+                    <img src="fotograflar/hatay.jpg" alt="Hatay görseli" width="400" height="120" loading="lazy">
+                    <h2>Hatay</h2>
+                </a>
+                <a href="çanakkale.html" class="card">
+                    <img src="fotograflar/çanakk.jpg" alt="Çanakkale görseli" width="400" height="120" loading="lazy">
+                    <h2>Çanakkale</h2>
+                </a>
+                <a href="eskisehir.html" class="card">
+                    <img src="fotograflar/eskisehir.jpg" alt="Eskişehir görseli" width="400" height="120"
+                        loading="lazy">
+                    <h2>Eskişehir</h2>
+                </a>
+                <a href="ordu.html" class="card">
+                    <img src="fotograflar/ordu.jpg" alt="Ordu görseli" width="400" height="120" loading="lazy">
+                    <h2>Ordu</h2>
+                </a>
+                <a href="şanliurfa.html" class="card">
+                    <img src="fotograflar/şanliu.jpg" alt="Şanlıurfa görseli" width="400" height="120" loading="lazy">
+                    <h2>Şanlıurfa</h2>
+                </a>
+                <a href="samsun.html" class="card">
+                    <img src="fotograflar/samsun.jpg" alt="Samsun görseli" width="400" height="120" loading="lazy">
+                    <h2>Samsun</h2>
+                </a>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <p><strong>Türkiye şehir rehberi</strong> — okul projesi kapsamında hazırlanmıştır.</p>
+            <p>Görseller ve metinler bilgilendirme amaçlıdır; güncel bilgi için resmi kaynaklara başvurun.</p>
+            <p>© 2026</p>
+        </footer>
+    </div>
+</body>
+
+</html>
